@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A Node.js RESTful API for user database and interview questions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "start-comment": "start script is a special script we can execute by running npm start. when defined here, node wont search nodemon on our local dir but on the entire system"
+  },
+  "author": "Elior Uzan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.0",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.2.4",
+    "mongosh": "^2.2.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.0"
+  }
+}
