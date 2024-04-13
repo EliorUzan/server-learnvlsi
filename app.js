@@ -2,10 +2,28 @@ const express = require('express');
 const app = express() ;
 const productRoutes = require('./api/routes/products'); 
 const orderRoutes   = require('./api/routes/orders');
+const register      = require('./api/routes/register');
+const login         = require('./api/routes/login')
 const morgan = require('morgan'); // login package for nodejs. This will file all request through morgan middleware. morgan will lock/pass the request
 const bodyParser = require('body-parser'); // This package parses requests 
+const cors = require('cors');
 // const mongoose = require('mongoose');
+const allowedOrigins = ["http://localhost:3000", "http://localhost:8099","http://localhost:3001"];
 
+app.use(
+    cors({
+        origin: function(origin, callback) {
+            if (!origin) return callback(null, true);
+            if (allowedOrigins.indexOf(origin) === -1) {
+                var msg =
+                    "The CORS policy for this site does not " +
+                    "allow access from the specified Origin.";
+                return callback(new Error(msg), false);
+            }
+            return callback(null, true);
+        }
+    })
+); 
 
 app.use(morgan('dev')); 
 app.use(bodyParser.urlencoded(
@@ -22,36 +40,38 @@ app.use(bodyParser.json());
 // This preflight request checks whether the actual request is safe to proceed.
 // The server responds with CORS-related headers indicating whether the actual request is allowed.
 
-app.use(
-    (req,resp,next) => {
-        resp.header('Access-Control-Allow-Origin','*'); // This gives access to all origins. can also give acces solely to the website
-        resp.header('Access-Control-Allow-Headers', 
-                        'Origin,\
-                        X-Requested-With, \
-                        Content-Type,\
-                        Accept, \
-                        Authorization'
-                    ); //Which kind of header we want to accept
-        if (req.method === 'OPTIONS') {
-            resp.header("Access-Control-Allow-Methods",
-                        "PUTS, \
-                        POST, \
-                        PATCH, \
-                        DELETE, \
-                        GET"
-            );
-            return resp.status(200).json({}); //empty object since the response is built out of all the headers we defined above
-        } else {
-            next() // without this, all requests will get stuck in this middleware
-        }
-    }
-);
+// app.use(
+//     (req,resp,next) => {
+//         resp.header('Access-Control-Allow-Origin','*'); // This gives access to all origins. can also give acces solely to the website
+//         resp.header('Access-Control-Allow-Headers', 
+//                         'Origin,\
+//                         X-Requested-With, \
+//                         Content-Type,\
+//                         Accept, \
+//                         Authorization'
+//                     ); //Which kind of header we want to accept
+//         if (req.method === 'OPTIONS') {
+//             resp.header("Access-Control-Allow-Methods",
+//                         "PUTS, \
+//                         POST, \
+//                         PATCH, \
+//                         DELETE, \
+//                         GET"
+//             );
+//             return resp.status(200).json({}); //empty object since the response is built out of all the headers we defined above
+//         } else {
+//             next() // without this, all requests will get stuck in this middleware
+//         }
+//     }
+// );
 
 
 // use is a middleware - incoming request has to go through app.use first 
 // All the requests are going through app.use middleware
 app.use('/products' ,productRoutes)  ;// all requests with suffix of '/prodcts' will be directed to ./api/routes/products
 app.use('/orders',orderRoutes);
+app.use('/register',register)
+app.use('/login',login);
 
 // mongoose.connect(`
 //     mongodb+srv://elioruzan:${process.env.MONGO_ATLASS_PW}>@cluster0.xcajxdj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,

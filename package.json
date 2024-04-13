@@ -11,7 +11,11 @@
   "author": "Elior Uzan",
   "license": "ISC",
   "dependencies": {
+    "argon2": "^0.40.1",
+    "argon2-browser": "^1.18.0",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "express": "^4.19.0",
     "mongoose": "^8.2.4",
     "mongosh": "^2.2.2",
