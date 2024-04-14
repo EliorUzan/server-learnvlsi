@@ -23,12 +23,15 @@ router.post('/',
             if (pass_ok) {
                 resp.status(201).json( /*login succeeded */
                     {
-                        message: `logic successful, Welcome ${user.full_name}`
+                        ok: true,
+                        full_name: user.full_name,
+                        message: `login successful, Welcome ${user.full_name}`
                     }
                 );
             } else {
                 resp.status(400).json( /*login failed (pass)*/
                     {
+                        ok: false,
                         message: "login failed, wrong credentials (password)"
                     }
                 );
@@ -36,6 +39,7 @@ router.post('/',
         } else {
             resp.status(400).json( /*login failed (email)*/
                 {
+                    ok: false,
                     message: "login failed, wrong credentials (email)"
                 }
             );
