@@ -7,6 +7,25 @@ const login         = require('./api/routes/login')
 const morgan = require('morgan'); // login package for nodejs. This will file all request through morgan middleware. morgan will lock/pass the request
 const bodyParser = require('body-parser'); // This package parses requests 
 const cors = require('cors');
+// const knex = require('knex'); 
+
+// const database = knex(
+//         {
+//             client: 'pg',
+//             connection: {
+//                 host: '127.0.0.1', /* Localhost */
+//                 port: 3306,
+//                 user: 'postgres',
+//                 password: 'Eu@20201!',
+//                 database: 'learnvlsidb0'
+//             }
+//         }
+    
+// );
+
+// console.log(database.select('*').from('users'));
+
+
 // const mongoose = require('mongoose');
 const allowedOrigins = ["http://localhost:3000", "http://localhost:8099","http://localhost:3001"];
 
