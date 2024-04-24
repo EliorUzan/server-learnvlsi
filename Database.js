@@ -135,8 +135,37 @@ function updateUser(email, hashedPassword) {
     }
 }
 
+
+// Function to retrieve a random technical question based on pageName
+async function getQuestion(pageName) {
+    try {
+        const questions = await database('technical_questions')
+            .where({ sub_field: pageName })
+            .select('*');
+
+        if (questions.length > 0) {
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const randomQuestion = questions[randomIndex];
+            return {
+                ok: true,
+                questionHTML: randomQuestion.question,
+                question_picture: randomQuestion.question_picture,
+                answerHTML: randomQuestion.answer,
+                answer_picture: randomQuestion.answer_picture
+            };
+        } else {
+            return { ok: false };
+        }
+    } catch (error) {
+        console.log('Error retrieving question:', error);
+        return { ok: false };
+    }
+}
+
+
 module.exports = {
     addUser,
     getUser,
-    updateUser
+    updateUser,
+    getQuestion
 };

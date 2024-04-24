@@ -3,7 +3,8 @@ const app = express() ;
 const productRoutes = require('./api/routes/products'); 
 const orderRoutes   = require('./api/routes/orders');
 const register      = require('./api/routes/register');
-const login         = require('./api/routes/login')
+const login         = require('./api/routes/login');
+const questions     = require('./api/routes/questions');
 const morgan = require('morgan'); // login package for nodejs. This will file all request through morgan middleware. morgan will lock/pass the request
 const bodyParser = require('body-parser'); // This package parses requests 
 const cors = require('cors');
@@ -91,13 +92,9 @@ app.use('/products' ,productRoutes)  ;// all requests with suffix of '/prodcts' 
 app.use('/orders',orderRoutes);
 app.use('/register',register)
 app.use('/login',login);
+app.use('/questions', questions); 
 
-// mongoose.connect(`
-//     mongodb+srv://elioruzan:${process.env.MONGO_ATLASS_PW}>@cluster0.xcajxdj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,
-//     { 
-//         useMongoClient: true
-//     }
-//     );
+
 
 
 // if you reached here that means no route above was able to answer your request thus you reached default - error handling
