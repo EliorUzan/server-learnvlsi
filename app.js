@@ -85,7 +85,6 @@ app.use(bodyParser.json());
 //     }
 // );
 
-
 // use is a middleware - incoming request has to go through app.use first 
 // All the requests are going through app.use middleware
 app.use('/products' ,productRoutes)  ;// all requests with suffix of '/prodcts' will be directed to ./api/routes/products

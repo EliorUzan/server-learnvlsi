@@ -136,22 +136,31 @@ function updateUser(email, hashedPassword) {
 }
 
 
-// Function to retrieve a random technical question based on pageName
-async function getQuestion(pageName) {
+// Function to retrieve a random technical question based on pageName (corresponding with sub_field)
+async function getRandomQuestion(sub_field) {
+    // Need to add option for non-random question retrieval - pick a question by headline
     try {
         const questions = await database('technical_questions')
-            .where({ sub_field: pageName })
+            .where({ sub_field: sub_field })
             .select('*');
 
         if (questions.length > 0) {
             const randomIndex = Math.floor(Math.random() * questions.length);
             const randomQuestion = questions[randomIndex];
+            const questionImagePath = '\\Q_pic.png'; 
+            const questionHTMLpath  = '\\Q.html' ; 
+            const answerImagePath   = '\\A_pic.png'; 
+            const answerHTMLpath    = '\\A.html' ;  
+
             return {
                 ok: true,
-                questionHTML: randomQuestion.question,
-                question_picture: randomQuestion.question_picture,
-                answerHTML: randomQuestion.answer,
-                answer_picture: randomQuestion.answer_picture
+                questionHeadline: randomQuestion.headline,
+                questionField: randomQuestion.field,
+                questionSubField: randomQuestion.sub_field.replace(/-/g,'_'),
+                questionHTML: questionHTMLpath,
+                question_picture: questionImagePath,
+                answerHTML: answerHTMLpath,
+                answer_picture: answerImagePath
             };
         } else {
             return { ok: false };
@@ -167,5 +176,5 @@ module.exports = {
     addUser,
     getUser,
     updateUser,
-    getQuestion
+    getRandomQuestion
 };
