@@ -1,6 +1,22 @@
 const userDatabase = {};
 const knex = require('knex'); 
 
+function shuffle(array) {
+    let currentIndex = array.length;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  }
+
 const database = knex(
         {
             client: 'pg',
@@ -136,21 +152,79 @@ function updateUser(email, hashedPassword) {
 }
 
 
+async function getQuestionByHeadline(headline) {
+    try {
+        question = await database('technical_questions')
+        .where({ headline: headline })
+        .select('*');
+        console.log('from db: q length',question)
+        if (question.length > 0) {
+            const questionImagePath = 'Q_pic.png'; 
+            const questionHTMLpath  = 'Q.html' ; 
+            const answerImagePath   = 'A_pic.png'; 
+            const answerHTMLpath    = 'A.html' ;  
+
+            return {
+                ok: true,
+                questionHeadline: question[0].headline,
+                questionField: question[0].field,
+                questionSubField: question[0].sub_field.replace(/-/g,'_'),
+                questionHTML: questionHTMLpath,
+                question_picture: questionImagePath,
+                answerHTML: answerHTMLpath,
+                answer_picture: answerImagePath
+            };
+        } else {
+            return { ok: false };
+        }
+    } catch (error) {
+        console.log(error)
+        return({ok: false})
+    };
+}
+
+async function getRandomQList(field, sub_field='') {
+    try {
+        let questions = []
+        if (sub_field === '') {
+            questions = await database('technical_questions')
+                .where({ field: field })
+                .select('*');
+        } else {
+            questions = await database('technical_questions')
+                .where({ field: field })
+                .where({ sub_field: sub_field })
+                .select('*');
+        }
+        const randomQHeadlines = questions.map(question => question.headline).sort(() => Math.random() - 0.5);
+        return(
+                {
+                    ok: true,
+                    randomQList: randomQHeadlines
+                }
+            );
+    } catch (error) {
+        console.log(error)
+        return({ok: false})
+    };
+}
 // Function to retrieve a random technical question based on pageName (corresponding with sub_field)
-async function getRandomQuestion(sub_field) {
+async function getRandomQuestion(sub_field, alreadyAskedQs = []) {
     // Need to add option for non-random question retrieval - pick a question by headline
     try {
         const questions = await database('technical_questions')
             .where({ sub_field: sub_field })
+            .whereNotIn('headline', alreadyAskedQs)
             .select('*');
-
+        
+        console.log('from getRandomQuestion: questions: ',questions)
         if (questions.length > 0) {
             const randomIndex = Math.floor(Math.random() * questions.length);
             const randomQuestion = questions[randomIndex];
-            const questionImagePath = '\\Q_pic.png'; 
-            const questionHTMLpath  = '\\Q.html' ; 
-            const answerImagePath   = '\\A_pic.png'; 
-            const answerHTMLpath    = '\\A.html' ;  
+            const questionImagePath = 'Q_pic.png'; 
+            const questionHTMLpath  = 'Q.html' ; 
+            const answerImagePath   = 'A_pic.png'; 
+            const answerHTMLpath    = 'A.html' ;  
 
             return {
                 ok: true,
@@ -176,5 +250,7 @@ module.exports = {
     addUser,
     getUser,
     updateUser,
-    getRandomQuestion
+    getRandomQuestion,
+    getRandomQList,
+    getQuestionByHeadline
 };

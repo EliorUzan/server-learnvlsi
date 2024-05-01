@@ -5,6 +5,8 @@ const orderRoutes   = require('./api/routes/orders');
 const register      = require('./api/routes/register');
 const login         = require('./api/routes/login');
 const questions     = require('./api/routes/questions');
+const getRandomQList = require('./api/routes/getRandomQList');
+
 const morgan = require('morgan'); // login package for nodejs. This will file all request through morgan middleware. morgan will lock/pass the request
 const bodyParser = require('body-parser'); // This package parses requests 
 const cors = require('cors');
@@ -91,7 +93,8 @@ app.use('/products' ,productRoutes)  ;// all requests with suffix of '/prodcts' 
 app.use('/orders',orderRoutes);
 app.use('/register',register)
 app.use('/login',login);
-app.use('/questions', questions); 
+app.use('/questions', questions);
+app.use('/getRandomQList', getRandomQList);
 
 
 
