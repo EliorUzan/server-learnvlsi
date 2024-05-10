@@ -16,19 +16,28 @@ function shuffle(array) {
         array[randomIndex], array[currentIndex]];
     }
   }
+// const host = '127.0.0.1'
+const db_url = process.env.DATABASE_URL
+console.log(`db url: ${db_url}`)
+// const database = knex(
+//         {
+//             client: 'pg',
+//             connection: {
+//                 host: host, /* Localhost */
+//                 port: 5432,
+//                 user: 'postgres',
+//                 password: 'Eu@20201!',
+//                 database: 'learnvlsidb0'
+//             }
+//         }
+// );
 
 const database = knex(
-        {
-            client: 'pg',
-            connection: {
-                host: '127.0.0.1', /* Localhost */
-                port: 5432,
-                user: 'postgres',
-                password: 'Eu@20201!',
-                database: 'learnvlsidb0'
-            }
-        }
-);
+    {
+        client: 'pg',
+        connection: db_url
+    }
+)
 
 async function addUserProfile(email, full_name) {
     try {
@@ -246,11 +255,40 @@ async function getRandomQuestion(sub_field, alreadyAskedQs = []) {
 }
 
 
+async function getBlogPostByheader(header) {
+    try {
+        blogPost = await database('blog_posts')
+        .where({ header: header })
+        .select('*');
+        console.log('from db: blogPost',blogPost)
+        if (blogPost.length > 0) {
+            return {
+                ok: true,
+                header: blogPost[0].header,
+                date: blogPost[0].date
+            }
+        } else {
+            return  {
+                ok: false,
+                reason: "Blog Post not found in dB"
+            };
+        }
+    } catch (error) {
+        console.log(error)
+        return  {
+            ok: false,
+            reason: "internal error retrieving blog post from DB"
+        };
+    };
+}
+
+
 module.exports = {
     addUser,
     getUser,
     updateUser,
     getRandomQuestion,
     getRandomQList,
-    getQuestionByHeadline
+    getQuestionByHeadline,
+    getBlogPostByheader
 };

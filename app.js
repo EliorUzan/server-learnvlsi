@@ -1,11 +1,12 @@
 const express = require('express'); 
 const app = express() ;
-const productRoutes = require('./api/routes/products'); 
-const orderRoutes   = require('./api/routes/orders');
-const register      = require('./api/routes/register');
-const login         = require('./api/routes/login');
-const questions     = require('./api/routes/questions');
+const productRoutes  = require('./api/routes/products'); 
+const orderRoutes    = require('./api/routes/orders');
+const register       = require('./api/routes/register');
+const login          = require('./api/routes/login');
+const questions      = require('./api/routes/questions');
 const getRandomQList = require('./api/routes/getRandomQList');
+const blogPosts      = require('./api/routes/blogPosts');
 
 const morgan = require('morgan'); // login package for nodejs. This will file all request through morgan middleware. morgan will lock/pass the request
 const bodyParser = require('body-parser'); // This package parses requests 
@@ -30,7 +31,7 @@ const cors = require('cors');
 
 
 // const mongoose = require('mongoose');
-const allowedOrigins = ["http://localhost:3000", "http://localhost:8099","http://localhost:3001"];
+const allowedOrigins = ["http://localhost:3000", "http://localhost:8099","http://localhost:3001", "https://elioruzan.github.io"];
 
 app.use(
     cors({
@@ -95,6 +96,7 @@ app.use('/register',register)
 app.use('/login',login);
 app.use('/questions', questions);
 app.use('/getRandomQList', getRandomQList);
+app.use('/blogPosts', blogPosts);
 
 
 
