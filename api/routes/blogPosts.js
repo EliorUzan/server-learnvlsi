@@ -16,7 +16,7 @@ router.get('/showPost/:header', async (req, resp, next) => {
                     blogPost_header: blogPostData.header,
                     sub_header_HTML: `${blogPost_dir}/sub_header.html`,
                     home_page_summary_HTML: `${blogPost_dir}/home_page_summary.html`,
-                    answerHTML: `${blogPost_dir}/blogPost_articl.html`,
+                    articleHTML: `${blogPost_dir}/blogPost_article.html`,
                     pics_dir: `${blogPost_dir}/blogPost_pics/`,
                 }
                 console.log('server_json_GET_response: ',server_json_GET_resp)

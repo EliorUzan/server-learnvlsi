@@ -92,7 +92,7 @@ router.post('/:pageName', async (req, resp, next) => {
   router.use('/showQuestion/:qdir_name/:file', (req, res, next) => {
     const qdir_name = req.params.qdir_name;
     const file = req.params.file;
-    const filePath = path.join(__dirname, '..', '..', '..', '..', 'Questions', 'Approved', qdir_name, file);
+    const filePath = path.join(__dirname, '..', '..', 'Questions', 'Approved', qdir_name, file);
     console.log(filePath)
     res.sendFile(filePath, (err) => {
       if (err) {

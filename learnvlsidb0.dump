@@ -1,0 +1,304 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.2
+-- Dumped by pg_dump version 16.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: blog_posts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.blog_posts (
+    id integer NOT NULL,
+    date timestamp without time zone NOT NULL,
+    header character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.blog_posts OWNER TO postgres;
+
+--
+-- Name: blog_posts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.blog_posts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.blog_posts_id_seq OWNER TO postgres;
+
+--
+-- Name: blog_posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.blog_posts_id_seq OWNED BY public.blog_posts.id;
+
+
+--
+-- Name: login; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.login (
+    id integer NOT NULL,
+    hashed_password character varying(100) NOT NULL,
+    email text NOT NULL
+);
+
+
+ALTER TABLE public.login OWNER TO postgres;
+
+--
+-- Name: login_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.login_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.login_id_seq OWNER TO postgres;
+
+--
+-- Name: login_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.login_id_seq OWNED BY public.login.id;
+
+
+--
+-- Name: profiles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.profiles (
+    id integer NOT NULL,
+    full_name character varying(100) NOT NULL,
+    email text NOT NULL,
+    joining_date timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.profiles OWNER TO postgres;
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.profiles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.profiles_id_seq OWNER TO postgres;
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.profiles_id_seq OWNED BY public.profiles.id;
+
+
+--
+-- Name: technical_questions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.technical_questions (
+    id integer NOT NULL,
+    date timestamp without time zone NOT NULL,
+    headline character varying(100) NOT NULL,
+    question text NOT NULL,
+    question_picture text,
+    answer text NOT NULL,
+    answer_picture text,
+    field character varying(100) NOT NULL,
+    sub_field character varying(100)
+);
+
+
+ALTER TABLE public.technical_questions OWNER TO postgres;
+
+--
+-- Name: technical_questions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.technical_questions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.technical_questions_id_seq OWNER TO postgres;
+
+--
+-- Name: technical_questions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.technical_questions_id_seq OWNED BY public.technical_questions.id;
+
+
+--
+-- Name: blog_posts id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.blog_posts ALTER COLUMN id SET DEFAULT nextval('public.blog_posts_id_seq'::regclass);
+
+
+--
+-- Name: login id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.login ALTER COLUMN id SET DEFAULT nextval('public.login_id_seq'::regclass);
+
+
+--
+-- Name: profiles id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profiles ALTER COLUMN id SET DEFAULT nextval('public.profiles_id_seq'::regclass);
+
+
+--
+-- Name: technical_questions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.technical_questions ALTER COLUMN id SET DEFAULT nextval('public.technical_questions_id_seq'::regclass);
+
+
+--
+-- Data for Name: blog_posts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.blog_posts (id, date, header) FROM stdin;
+1	2024-05-25 19:05:33.936583	initial-roles-in-the-industry
+\.
+
+
+--
+-- Data for Name: login; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.login (id, hashed_password, email) FROM stdin;
+1	$2b$10$1PxjTCTCurgkXGO66zQ/LepJbhgqulGXg/vtnRJXturEJk6ugurTG	testUser@gmail.com
+5	$2b$10$O.CBjZHuJPiHKeEVNolGIOuKenhuCXXiDb4ruqenQ0TzzofqNB0kW	testUser2@gmail.com
+6	$2b$10$JXu7n24MgHIjXpBXk3Hokej6.GYisEnypp51cUjWs0smp5G27EEji	testUser23333@gmail.com
+8	$2b$10$j9/iqzkap47N43QjtV3DXec3CGuYshtrfHKbgBV9hmW57UGDpmJKu	testUsessr@gmail.com
+9	$2b$10$jvP.Hi/qRT81DQjj2NOrsexbB6YaiWIBi/j6MNuL9w1U2L26TomAi	testUsessddsr@gmail.com
+12	$2b$10$ooFB2AW8K8LyINle4x3zTupe46ThuEd7lS65G7Rgnf5WWDUAcJ3kW	AnotherTest@gmail.com
+13	$2b$10$6P3yGCaEIXog7s.leDjY0OTCKZdsxVHJhXfTmQ52rmeuGevbY/LSW	AnotherTest2@gmail.com
+17	$2b$10$XTcuCRGGou.4yHgF/o5NaevNUOW7yWDLC4JVvbOXWaea8HjNeQ7ym	AnotherTest3@gmail.com
+18	$2b$10$gQWIqotHa2McqtBoSHhqVeXHItbOBV7lJ/eZNAsuUQnxcIjdlRPvu	AnotherTest4@gmail.com
+22	$2b$10$8EEqeueAS2yG4HYofb7j1OY89qfEaLS7tFpZeje30385gkZ4yHVRW	AnotherTest5@gmail.com
+38	$2b$10$Npbye/JV2MpGgbUWXahCIO18ELpf3z3L4TGFgDN8lgFml7LRH826C	AnotherTest6@gmail.com
+40	$2b$10$ML1Kvmj1UPUq4e5p2nBeb.pSMdeDciMUazmLPCnAKXZP2TnlBbQSC	AnotherTest7@gmail.com
+41	$2b$10$WrNCJBPzFpFPdpNpO15w5eYiupw1bapdAO4vZx5hRQY25F0BVfU82	a@b.com
+42	$2b$10$zPUb0o9euK74jot5EBE8Y.XNvTpnX6W7Q03iSfKt4cpgFNfIUMJ8W	TestFromFE@gmail.com
+\.
+
+
+--
+-- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.profiles (id, full_name, email, joining_date) FROM stdin;
+1	tesddsddty test	testUsessddsr@gmail.com	2024-04-19 15:47:14.893
+3	This is an original name	AnotherTest@gmail.com	2024-04-19 15:53:44.465
+4	This is an original name2	AnotherTest2@gmail.com	2024-04-19 15:55:09.817
+8	This is an original name3	AnotherTest3@gmail.com	2024-04-19 16:08:13.552
+9	This is an original name4	AnotherTest4@gmail.com	2024-04-19 16:14:08.017
+13	This is an original name5	AnotherTest5@gmail.com	2024-04-19 16:23:37.052
+29	This is an original name6	AnotherTest6@gmail.com	2024-04-19 17:17:27.525
+31	This is an original name7	AnotherTest7@gmail.com	2024-04-19 17:21:05.491
+32	a	a@b.com	2024-04-19 18:55:26.151
+33	SomeNameForTest Kaki	TestFromFE@gmail.com	2024-04-19 18:56:06.418
+\.
+
+
+--
+-- Data for Name: technical_questions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.technical_questions (id, date, headline, question, question_picture, answer, answer_picture, field, sub_field) FROM stdin;
+2	2024-04-23 19:46:22.565715	Infinite_Resistors_structure	../../../../../Questions/Approved/Infinite_Resistors_structure__vlsi__General/Q.html	../../../../../Questions/Approved/Infinite_Resistors_structure__vlsi__General/Q_pic.png	../../../../../Questions/Approved/Infinite_Resistors_structure__vlsi__General/A.html	../../../../../Questions/Approved/Infinite_Resistors_structure__vlsi__General/A_pic.png	vlsi	vlsi-general
+4	2024-04-27 15:32:58.273045	mux_for_logic_gates_design	../../../../Questions/Approved/mux_for_logic_gates_design__vlsi__vlsi_general/Q.html	\N	../../../../Questions/Approved/mux_for_logic_gates_design__vlsi__vlsi_general/A.html	../../../../Questions/Approved/mux_for_logic_gates_design__vlsi__vlsi_general/A_pic.png	vlsi	vlsi-general
+\.
+
+
+--
+-- Name: blog_posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.blog_posts_id_seq', 1, true);
+
+
+--
+-- Name: login_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.login_id_seq', 42, true);
+
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.profiles_id_seq', 33, true);
+
+
+--
+-- Name: technical_questions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.technical_questions_id_seq', 4, true);
+
+
+--
+-- Name: login login_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.login
+    ADD CONSTRAINT login_pkey PRIMARY KEY (email);
+
+
+--
+-- Name: profiles profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_pkey PRIMARY KEY (email);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

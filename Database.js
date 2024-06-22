@@ -17,7 +17,7 @@ function shuffle(array) {
     }
   }
 // const host = '127.0.0.1'
-const db_url = process.env.DATABASE_URL
+const db_url = "postgres://elioru:hjWNJ9wOp0pfNJp@server-learnvlsi-db.flycast:5432/learnvlsidb0?sslmode=disable"
 console.log(`db url: ${db_url}`)
 // const database = knex(
 //         {

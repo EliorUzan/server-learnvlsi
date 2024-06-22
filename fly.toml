@@ -20,3 +20,4 @@ primary_region = 'ams'
   memory = '2gb'
   cpu_kind = 'shared'
   cpus = 1
+
